@@ -15,5 +15,9 @@ namespace Social_API.Repositories
         {
             return commentRepository.GetAll().Where(x => x.PostId == id).ToList();
         }
+        public List<Comment> GetAllCommentsByPostByCommentId(int id, int CommentId)
+        {
+            return commentRepository.GetAll().Where(x => x.PostId == id && x.CommentId == CommentId).ToList();
+        }
     }
 }

@@ -55,8 +55,18 @@ namespace Social_API.Controllers
             if (comment == null)
             {
                 return StatusCode(HttpStatusCode.NoContent);
-            }
+            }else
             return Ok(postRepository.GetCommentByPost(id));
+        }
+        [Route("{id}/comments/{CommentId}")]
+        public IHttpActionResult GetAllCommentsById(int id, int CommentId)
+        {
+            var comment = postRepository.GetAllCommentsByPostByCommentId(id, CommentId);
+            if (comment == null)
+            {
+                return StatusCode(HttpStatusCode.NoContent);
+            }else
+            return Ok(postRepository.GetAllCommentsByPostByCommentId(id, CommentId));
         }
     }
 }

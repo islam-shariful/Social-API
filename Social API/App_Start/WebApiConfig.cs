@@ -15,6 +15,12 @@ namespace Social_API
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
+                "CommentByIdApi",
+                "api/posts/{id}/comments/{CommentId}",
+                new { controller = "Post" , action = "GetAllCommentsById"}
+            );
+
+            config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
