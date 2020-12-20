@@ -17,5 +17,15 @@ namespace Social_API.Controllers
         {
             return Ok(postRepository.GetAll());
         }
+        [Route("{id}", Name = "GetCategoryById")]
+        public IHttpActionResult Get(int id)
+        {
+            var category = postRepository.Get(id);
+            if (category == null)
+            {
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+            return Ok(postRepository.Get(id));
+        }
     }
 }
