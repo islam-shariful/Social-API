@@ -42,5 +42,11 @@ namespace Social_API.Controllers
             postRepository.Update(post);
             return Ok(post);
         }
+        [Route("{id}")]
+        public IHttpActionResult Delete(int id)
+        {
+            postRepository.Delete(id);
+            return StatusCode(HttpStatusCode.NoContent);
+        }
     }
 }
