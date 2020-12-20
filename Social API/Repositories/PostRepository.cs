@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Social_API.Repositories
 {
-    public class CategoryRepository : Repository<Post>
+    public class PostRepository : Repository<Post>
     {
     }
 }
