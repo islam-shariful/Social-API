@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Social_API.Models;
 
 namespace Social_API.Controllers
 {
@@ -17,7 +18,7 @@ namespace Social_API.Controllers
         {
             return Ok(postRepository.GetAll());
         }
-        [Route("{id}", Name = "GetCategoryById")]
+        [Route("{id}", Name = "GetPostById")]
         public IHttpActionResult Get(int id)
         {
             var category = postRepository.Get(id);
@@ -26,6 +27,13 @@ namespace Social_API.Controllers
                 return StatusCode(HttpStatusCode.NoContent);
             }
             return Ok(postRepository.Get(id));
+        }
+        [Route("")]
+        public IHttpActionResult Post(Post post)
+        {
+            postRepository.Insert(post);
+            string uri = Url.Link("GetPostById", new { id = post.PostId });
+            return Created(uri, post);
         }
     }
 }
