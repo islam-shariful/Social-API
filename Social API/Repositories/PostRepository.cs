@@ -1,4 +1,5 @@
-﻿using Social_API.Models;
+﻿using Inventory_with_Repository_Pattern.Repositories;
+using Social_API.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,5 +9,11 @@ namespace Social_API.Repositories
 {
     public class PostRepository : Repository<Post>
     {
+        CommentRepository commentRepository = new CommentRepository();
+
+        public List<Comment> GetCommentByPost(int id)
+        {
+            return commentRepository.GetAll().Where(x => x.PostId == id).ToList();
+        }
     }
 }

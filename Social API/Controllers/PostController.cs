@@ -48,5 +48,15 @@ namespace Social_API.Controllers
             postRepository.Delete(id);
             return StatusCode(HttpStatusCode.NoContent);
         }
+        [Route("{id}/comments")]
+        public IHttpActionResult GetAllComments(int id)
+        {
+            var comment = postRepository.GetCommentByPost(id);
+            if (comment == null)
+            {
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+            return Ok(postRepository.GetCommentByPost(id));
+        }
     }
 }

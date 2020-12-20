@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Inventory_with_Repository_Pattern.Repositories
 {
-    public class ProductRepository : Repository<Comment>
+    public class CommentRepository : Repository<Comment>
     {
     }
 }
