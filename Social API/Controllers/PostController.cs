@@ -35,5 +35,12 @@ namespace Social_API.Controllers
             string uri = Url.Link("GetPostById", new { id = post.PostId });
             return Created(uri, post);
         }
+        [Route("{id}")]
+        public IHttpActionResult Put([FromUri] int id, [FromBody] Post post)
+        {
+            post.PostId = id;
+            postRepository.Update(post);
+            return Ok(post);
+        }
     }
 }
