@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Social_API.Models;
+using Inventory_with_Repository_Pattern.Repositories;
 
 namespace Social_API.Controllers
 {
@@ -48,6 +49,7 @@ namespace Social_API.Controllers
             postRepository.Delete(id);
             return StatusCode(HttpStatusCode.NoContent);
         }
+        //..........................................
         [Route("{id}/comments")]
         public IHttpActionResult GetAllComments(int id)
         {
@@ -67,6 +69,24 @@ namespace Social_API.Controllers
                 return StatusCode(HttpStatusCode.NoContent);
             }else
             return Ok(postRepository.GetAllCommentsByPostByCommentId(id, CommentId));
+        }
+        [Route("{id}/comments")]
+        public IHttpActionResult Post(Comment comment)
+        {
+            CommentRepository commentRepository = new CommentRepository();
+            commentRepository.Insert(comment);
+            Post post = new Post();
+            return Created("api/Products/" + post.PostId, comment);
+        }
+        [Route("{id}/comments/{CommentId}")]
+        public IHttpActionResult Put([FromUri] int id, [FromUri] int CommentId, [FromBody] Comment comment)
+        {
+            Post post = new Post();
+            post.PostId = id;
+            comment.CommentId = CommentId;
+            CommentRepository commentRepository = new CommentRepository();
+            commentRepository.Update(comment);
+            return Ok(comment);
         }
     }
 }
