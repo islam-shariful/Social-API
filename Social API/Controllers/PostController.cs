@@ -88,5 +88,12 @@ namespace Social_API.Controllers
             commentRepository.Update(comment);
             return Ok(comment);
         }
+        [Route("{id}/comments/{CommentId}")]
+        public IHttpActionResult Deleteomments(int id, int CommentId)
+        {
+            CommentRepository commentRepository = new CommentRepository();
+            commentRepository.Delete(CommentId);
+            return StatusCode(HttpStatusCode.NoContent);
+        }
     }
 }
