@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Social API</title>
+  </head>
+  <body>
+    <form action="">
+      Post: <input id="Post" name="Post" placeholder="Enter Status"/>
+      Profile ID: <input id="ProfileId" name="ProfileId" placeholder="Profile ID"/>
+      Post ID: <input id="PostId" name="PostId" placeholder="Post ID"/>
+      <button onclick="return formSubmit(event)">POST</button>
+      <button onclick="return formSubmitForUpdate(event)">MODIFY</button>
+      <button onclick="return formSubmitForDelete(event)">DELETE</button>
+    </form>
+    <!-- <form action="">
+      Comment Id: <input id="CommentId" name="CommentId" placeholder="Comment ID"/>
+      Comment: <input id="Comment" name="Comment" placeholder="Enter Comment"/>
+      Post ID: <input id="PostId" name="PostId" placeholder="Post ID"/>
+      <button onclick="return commentFormSubmit(event)">POST</button>
+      <button onclick="return commentFormSubmitForUpdate(event)">MODIFY</button>
+      <button onclick="return commentFormSubmitForDelete(event)">DELETE</button>
+    </form> -->
+  </body>
+  <script src="jquery-3.5.1.js"></script>
+  <script>
+    function formSubmit(e) {
+    e.preventDefault();
+    $.ajax({
+              url : "http://localhost:63238/api/posts/",
+              method: "POST",
+              data : { "post1" : $("#Post").val(), "profileId": $("#ProfileId").val() },
+              success : function(res){
+                console.log("Posted Successfully");
+              }
+    });
+
+    return false;
+  }
+
+  function formSubmitForUpdate(e) {
+    e.preventDefault();
+    $.ajax({
+              url : "http://localhost:63238/api/posts/"+$("#PostId").val(),
+              method: "PUT",
+              data : { "post1" : $("#Post").val(), "profileId": $("#ProfileId").val() },
+              success : function(res){
+                console.log("Updated Successfully");
+              }
+    });
+
+    return false;
+  }
+  function formSubmitForDelete(e) {
+    e.preventDefault();
+    $.ajax({
+              url : "http://localhost:63238/api/posts/"+$("#PostId").val(),
+              method: "DELETE",
+              success : function(res){
+                console.log("Deleted Successfully");
+              }
+    });
+
+    return false;
+  }
+
+  //.........................................
+  function commentFormSubmit(e) {
+    e.preventDefault();
+    $.ajax({
+              url : "http://localhost:63238/api/posts/"+$("#PostId").val()+"/comments/",
+              method: "POST",
+              data : { "Comment" : $("#Comment").val(), "PostId": $("#PostId").val() },
+              success : function(res){
+                console.log("Commented Successfully");
+              }
+    });
+
+    return false;
+  }
+    
+  </script>
+</html>
