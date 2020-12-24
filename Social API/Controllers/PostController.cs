@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Social_API.Models;
 using Inventory_with_Repository_Pattern.Repositories;
+using System.Web;
 
 namespace Social_API.Controllers
 {
@@ -14,6 +15,7 @@ namespace Social_API.Controllers
     public class PostController : ApiController
     {
         PostRepository postRepository = new PostRepository();
+        
         [Route("")]
         public IHttpActionResult Get()
         {
@@ -22,17 +24,23 @@ namespace Social_API.Controllers
         [Route("{id}", Name = "GetPostById")]
         public IHttpActionResult Get(int id)
         {
-            var category = postRepository.Get(id);
-            if (category == null)
+            var post = postRepository.Get(id);
+            if (post == null)
             {
                 return StatusCode(HttpStatusCode.NoContent);
             }
+            post.Links.Add(new Link() { Url = "http://localhost:63238/api/posts/", Method = "Get", Relation = "Self" });
+            post.Links.Add(new Link() { Url = HttpContext.Current.Request.Url.AbsoluteUri.ToString(), Method = "Get", Relation = "Get all categories" });
+            post.Links.Add(new Link() { Url = HttpContext.Current.Request.Url.AbsoluteUri.ToString(), Method = "Post", Relation = "Create new category resources" });
+            post.Links.Add(new Link() { Url = HttpContext.Current.Request.Url.AbsoluteUri.ToString(), Method = "Put", Relation = "Modify existing category resources" });
+            post.Links.Add(new Link() { Url = HttpContext.Current.Request.Url.AbsoluteUri.ToString(), Method = "Delete", Relation = "Remove existing category resources" });
             return Ok(postRepository.Get(id));
         }
         [Route("")]
         public IHttpActionResult Post(Post post)
         {
             postRepository.Insert(post);
+            post.Links.Add(new Link() { Url = HttpContext.Current.Request.Url.AbsoluteUri.ToString(), Method = "Delete", Relation = "Remove existing category resources" });
             string uri = Url.Link("GetPostById", new { id = post.PostId });
             return Created(uri, post);
         }

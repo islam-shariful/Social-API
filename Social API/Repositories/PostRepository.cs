@@ -10,7 +10,6 @@ namespace Social_API.Repositories
     public class PostRepository : Repository<Post>
     {
         CommentRepository commentRepository = new CommentRepository();
-
         public List<Comment> GetCommentByPost(int id)
         {
             return commentRepository.GetAll().Where(x => x.PostId == id).ToList();

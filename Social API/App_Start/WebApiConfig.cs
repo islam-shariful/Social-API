@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace Social_API
 {
@@ -17,7 +18,7 @@ namespace Social_API
             config.Routes.MapHttpRoute(
                 "CommentByIdApi",
                 "api/posts/{id}/comments/{CommentId}",
-                new { controller = "Post" , action = "GetAllCommentsById"}
+                new { controller = "Post" }
             );
 
             config.Routes.MapHttpRoute(
@@ -25,6 +26,9 @@ namespace Social_API
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver();
+            EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "*");
+            config.EnableCors(cors);
         }
     }
 }

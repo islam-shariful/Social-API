@@ -9,13 +9,22 @@
 
 namespace Social_API.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
-    
+    using System.Xml.Serialization;
+
     public partial class Post
     {
+        List<Link> links = new List<Link>();
         public int PostId { get; set; }
         public string Post1 { get; set; }
         public int ProfileId { get; set; }
+        //[JsonIgnore, XmlIgnore]
+        public List<Link> Links
+        {
+            get { return links; }
+        }
+        
     }
 }
